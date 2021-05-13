@@ -4,6 +4,7 @@
 namespace App\Services\Telegram\Messages;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class SendMessageToChat
 {
@@ -12,7 +13,7 @@ class SendMessageToChat
     public function __construct()
     {
         $urlToSendMessageFromBot       = config('telegram.send_message_url');
-        $this->urlToSendMessageFromBot = str_replace(
+        $this->urlToSendMessageFromBot = Str::replace(
             [
                 '{botAndToken}',
                 '{text_to_be_sent}'
@@ -26,7 +27,7 @@ class SendMessageToChat
 
     public function setChatId($chatId) : self
     {
-        $this->urlToSendMessageFromBot = str_replace('{chat_id}', $chatId, $this->urlToSendMessageFromBot);
+        $this->urlToSendMessageFromBot = Str::replace('{chat_id}', $chatId, $this->urlToSendMessageFromBot);
         return $this;
     }
 
