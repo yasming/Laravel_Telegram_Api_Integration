@@ -20,3 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/get-updates-from-bot/{token}', [TelegramController::class, 'getUpdatesFromBot']);
+Route::post('/set-webhook', [TelegramController::class, 'setWebhook']);
+
+
