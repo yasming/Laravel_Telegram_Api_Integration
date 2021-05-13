@@ -13,7 +13,7 @@ class SetWebhookTelegramApi
     public function __construct()
     {
         $urlToSetWebhook       = config('telegram.set_webhook_url');
-        $this->urlToSetWebhook = str_replace('{bot}', config('telegram.bot'), $urlToSetWebhook);
+        $this->urlToSetWebhook = str_replace('{botAndToken}', config('telegram.bot_and_token'), $urlToSetWebhook);
         $this->urlWebhookApi   = config('telegram.webhook_api_url');
     }
 

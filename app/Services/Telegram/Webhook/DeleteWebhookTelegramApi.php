@@ -12,7 +12,7 @@ class DeleteWebhookTelegramApi
     public function __construct()
     {
         $urlToDeleteWebhook       = config('telegram.delete_webhook_url');
-        $this->urlToDeleteWebhook = str_replace('{bot}', config('telegram.bot'), $urlToDeleteWebhook);
+        $this->urlToDeleteWebhook = str_replace('{botAndToken}', config('telegram.bot'), $urlToDeleteWebhook);
     }
 
     public function deleteWebhook()

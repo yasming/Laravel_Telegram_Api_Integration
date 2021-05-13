@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Session;
+use App\Services\Telegram\Messages\SendMessageToChat;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -53,6 +54,8 @@ class StoreMessagesFromBotInDatabase implements ShouldQueue
         if ($this->activeSession == null) {
             $this->createNewSession();
         }
+
+        $response = (new SendMessageToChat)->setChatId($this->chatId)->sendMessage();
     }
 
     private function updateSession() : void
