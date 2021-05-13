@@ -4,7 +4,6 @@
 namespace App\Services\Telegram;
 
 use Illuminate\Support\Facades\Http;
-use Spatie\Multitenancy\Models\Tenant;
 
 class SetWebhookTelegramApi
 {

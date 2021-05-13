@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\MessagesFromBotProcessed;
 use App\Facades\Services\Telegram\SetWebhookTelegramApi;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidateTokenRequest;
