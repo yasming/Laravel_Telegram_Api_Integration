@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Facades\Services\Telegram;
+namespace App\Facades\Services\Telegram\Webhook;
 
-use App\Services\Telegram\SetWebhookTelegramApi as Action;
+use App\Services\Telegram\Webhook\SetWebhookTelegramApi as Action;
 use Illuminate\Support\Facades\Facade;
 
 class SetWebhookTelegramApi extends Facade

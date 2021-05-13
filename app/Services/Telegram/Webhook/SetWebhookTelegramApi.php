@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services\Telegram;
+namespace App\Services\Telegram\Webhook;
 
 use Illuminate\Support\Facades\Http;
 
