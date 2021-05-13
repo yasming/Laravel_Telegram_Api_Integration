@@ -35,7 +35,7 @@ class StoreMessagesFromBotInDatabase implements ShouldQueue
         $this->last_name     = $this->getAttributesValueFromBot(self::LAST_NAME_KEYS);
         $this->messageId     = $this->getAttributesValueFromBot(self::MESSAGE_ID_KEYS);
         $this->messageText   = $this->getAttributesValueFromBot(self::MESSAGE_TEXT_KEYS);
-        $this->activeSession = $this->getActiveSession($this->chatId);
+        $this->activeSession = $this->getActiveSession();
     }
 
     /**
@@ -43,15 +43,24 @@ class StoreMessagesFromBotInDatabase implements ShouldQueue
      *
      * @return void
     */
+
     public function handle()
     {
-        if ($this->activeSession->count() > 0) {
+        if ($this->activeSession != null) {
             $this->updateSession();
         }
 
-        if ($this->activeSession->count() == 0) {
+        if ($this->activeSession == null) {
             $this->createNewSession();
         }
+    }
+
+    private function updateSession() : void
+    {
+        $actualMessage = $this->activeSession->message;
+        array_push($actualMessage,$this->getMessageFromBot());
+
+        $this->activeSession->update(['message' => $actualMessage]);
     }
 
     private function createNewSession() : void
@@ -62,13 +71,18 @@ class StoreMessagesFromBotInDatabase implements ShouldQueue
                 'last_name'          => $this->last_name,
                 'chat_id'            => $this->chatId,
                 'message'            => array(
-                    [
-                        'message_id' => $this->messageId,
-                        'text'       => $this->messageText
-                    ]
+                   $this->getMessageFromBot()
                 )
             ]
         );
+    }
+
+    private function getMessageFromBot() : array
+    {
+        return [
+            'message_id' => $this->messageId,
+            'text'       => $this->messageText
+        ];
     }
 
     private function getAttributesValueFromBot($attributes)
@@ -83,9 +97,9 @@ class StoreMessagesFromBotInDatabase implements ShouldQueue
         return $value;
     }
 
-    private function getActiveSession($chatId) 
+    private function getActiveSession() 
     {
-        if(!$chatId) return collect();
-        return Session::whereChatId('chat_id',$chatId)->get();  
+        if(!$this->chatId) return collect();
+        return Session::where('chat_id',$this->chatId)->first();  
     }
 }
