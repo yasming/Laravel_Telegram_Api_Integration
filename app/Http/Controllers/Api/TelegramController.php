@@ -10,6 +10,7 @@ class TelegramController extends Controller
 {
     public function getUpdatesFromBot(ValidateTokenRequest $request)
     {
-        StoreMessagesFromBotInDatabase::dispatch();
+        dd($request->all());
+        StoreMessagesFromBotInDatabase::dispatch($request->all());
     }
 }
