@@ -12,8 +12,7 @@
         "jenssegers/mongodb": "^3.8",
         "laravel/framework": "^8.40",
         "laravel/horizon": "^5.7",
-        "laravel/tinker": "^2.5",
-        "spatie/laravel-ray": "^1.17"
+        "laravel/tinker": "^2.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

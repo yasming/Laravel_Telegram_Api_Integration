@@ -1,18 +1,53 @@
-version: '3'
+version: "3"
 
 services:
-  mongo:
-    image: mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PASSWORD}
-    ports:
-      - "27017:27017"
+  # dependencies_installation:
+  #   build: .
+  #   container_name: dependencies_installation_container
+  #   volumes:
+  #     - ./:/app
+  #   command: bash /app/docker-dependencies.sh
+  nginx:
+    image: ambientum/php:8.0-nginx
     volumes:
-      - ./docker/mongodb/data_container:/data/db
-      - ./docker/mongodb/entrypoint/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
-    networks:
-      - mongo-compose-network
-networks: 
-    mongo-compose-network:
-      driver: bridge
+      - ./:/var/www/app
+    ports: 
+      - 80:8080
+    container_name: nginx_container
+    # depends_on: 
+    #   - dependencies_installation
+    # links:
+    #   - redis
+    #   - mongo
+    # networks:
+    #   - redis-network
+    #   - mongo-network
+
+#   redis:
+#     container_name: redis-container
+#     image: redis
+#     ports:
+#       - 6379:6379
+#     volumes:
+#       - ./docker/redis/data_container:/data
+#     networks:
+#       - redis-network
+
+#   mongo:
+#     image: mongo
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USERNAME}
+#       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PASSWORD}
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - ./docker/mongodb/data_container:/data/db
+#       - ./docker/mongodb/entrypoint/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+#     networks:
+#       - mongo-network
+
+# networks: 
+#     mongo-network: 
+#       driver: bridge
+#     redis-network:
+#       driver: bridge
