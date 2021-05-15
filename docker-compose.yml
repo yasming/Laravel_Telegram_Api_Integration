@@ -1,12 +1,26 @@
 version: "3"
 
 services:
-  # dependencies_installation:
-  #   build: .
-  #   container_name: dependencies_installation_container
-  #   volumes:
-  #     - ./:/app
-  #   command: bash /app/docker-dependencies.sh
+  dependencies_installation:
+    build: ./docker/dependencies
+    container_name: dependencies_installation_container
+    volumes:
+      - ./:/app
+    command: bash /app/docker/dependencies/docker-dependencies.sh
+
+  horizon:
+    image: ambientum/php:8.0
+    container_name: horizon-queue
+    command: php artisan horizon
+    volumes:
+      - .:/var/www/app
+    depends_on: 
+      - dependencies_installation
+      - redis
+    networks:
+      - redis-network
+      - mongo-network
+
   nginx:
     image: ambientum/php:8.0-nginx
     volumes:
@@ -14,40 +28,39 @@ services:
     ports: 
       - 80:8080
     container_name: nginx_container
-    # depends_on: 
-    #   - dependencies_installation
-    # links:
-    #   - redis
-    #   - mongo
-    # networks:
-    #   - redis-network
-    #   - mongo-network
+    depends_on: 
+      - dependencies_installation
+      - redis
+      - mongo
+    networks:
+      - redis-network
+      - mongo-network
 
-#   redis:
-#     container_name: redis-container
-#     image: redis
-#     ports:
-#       - 6379:6379
-#     volumes:
-#       - ./docker/redis/data_container:/data
-#     networks:
-#       - redis-network
+  redis:
+    container_name: redis-container
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ./docker/redis/data_container:/data
+    networks:
+      - redis-network
 
-#   mongo:
-#     image: mongo
-#     environment:
-#       MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USERNAME}
-#       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PASSWORD}
-#     ports:
-#       - "27017:27017"
-#     volumes:
-#       - ./docker/mongodb/data_container:/data/db
-#       - ./docker/mongodb/entrypoint/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
-#     networks:
-#       - mongo-network
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./docker/mongodb/data_container:/data/db
+      - ./docker/mongodb/entrypoint/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - mongo-network
 
-# networks: 
-#     mongo-network: 
-#       driver: bridge
-#     redis-network:
-#       driver: bridge
+networks: 
+    mongo-network: 
+      driver: bridge
+    redis-network:
+      driver: bridge
