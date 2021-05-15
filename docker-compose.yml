@@ -10,7 +10,7 @@ services:
 
   horizon:
     image: ambientum/php:8.0
-    container_name: horizon-queue
+    container_name: horizon-container
     command: php artisan horizon
     volumes:
       - .:/var/www/app
