@@ -60,7 +60,6 @@ POST
 /api/set-webhook
 ```
 
-
 ```
 In case of your bot already have a webhook url you can delete this in the follow endpoint
 ```
@@ -71,4 +70,16 @@ POST
 
 ```
 /api/delete-webhook
+```
+
+```
+The follow endpoint is the one that will receive the messages from bot and process them
+```
+
+```
+POST
+```
+
+```
+/api/get-updates-from-bot/{token}
 ```
