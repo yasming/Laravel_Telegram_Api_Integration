@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Telegram;
 
 use App\Models\Session;
-use App\Services\Telegram\Messages\SendMessageToChat;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class StoreMessagesFromBotInDatabase implements ShouldQueue
+class StoreMessagesFromBotInDatabaseJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -30,14 +29,14 @@ class StoreMessagesFromBotInDatabase implements ShouldQueue
 
     public $action;
     
-    public function __construct($request)
+    public function __construct($request, $chatId)
     {
         $this->request       = $request;
-        $this->chatId        = $this->getAttributesValueFromBot(self::CHAT_KEYS);
-        $this->first_name    = $this->getAttributesValueFromBot(self::FIRST_NAME_KEYS);
-        $this->last_name     = $this->getAttributesValueFromBot(self::LAST_NAME_KEYS);
-        $this->messageId     = $this->getAttributesValueFromBot(self::MESSAGE_ID_KEYS);
-        $this->messageText   = $this->getAttributesValueFromBot(self::MESSAGE_TEXT_KEYS);
+        $this->chatId        = $chatId;
+        $this->first_name    = getAttributesValueFromBot(self::FIRST_NAME_KEYS,   $request);
+        $this->last_name     = getAttributesValueFromBot(self::LAST_NAME_KEYS,    $request);
+        $this->messageId     = getAttributesValueFromBot(self::MESSAGE_ID_KEYS,   $request);
+        $this->messageText   = getAttributesValueFromBot(self::MESSAGE_TEXT_KEYS, $request);
         $this->activeSession = $this->getActiveSession();
         $this->action        = __('Store messages from bot action');
     }
@@ -57,8 +56,6 @@ class StoreMessagesFromBotInDatabase implements ShouldQueue
         if ($this->activeSession == null) {
             $this->createNewSession();
         }
-
-        (new SendMessageToChat)->setChatId($this->chatId)->sendMessage();
     }
 
     private function updateSession() : void
@@ -89,18 +86,6 @@ class StoreMessagesFromBotInDatabase implements ShouldQueue
             'message_id' => $this->messageId,
             'text'       => $this->messageText
         ];
-    }
-
-    private function getAttributesValueFromBot($attributes)
-    {
-        $arrayOfAttributes = explode(',', $attributes);
-        $value           = $this->request;
-        foreach($arrayOfAttributes as $attribute) {
-            if(!isset($value[$attribute])) return null;
-            $value = $value[$attribute];
-        }
-
-        return $value;
     }
 
     private function getActiveSession() 

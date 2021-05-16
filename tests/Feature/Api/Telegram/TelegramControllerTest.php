@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Api\Telegram;
 
-use App\Jobs\StoreMessagesFromBotInDatabase;
+use App\Jobs\StoreMessagesFromBotInDatabaseJob;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Tests\TestCase;
@@ -53,9 +53,8 @@ class TelegramControllerTest extends TestCase
                 __('message') => __('Received Message')
             ]);
 
-		Queue::assertPushed(StoreMessagesFromBotInDatabase::class, function ($job) {
+		Queue::assertPushed(StoreMessagesFromBotInDatabaseJob::class, function ($job) {
             return $job->action === __('Store messages from bot action');
-			// return $job->resource instanceof Model;
 		});
     }
 }

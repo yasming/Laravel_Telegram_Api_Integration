@@ -1,5 +1,6 @@
 {
     "Received Message": "Mensagem recebida",
     "Message": "Mensagem",
-    "Store messages from bot action": "Ação de gravar as mensagem do bot"
+    "Store messages from bot action": "Ação de gravar as mensagem do bot",
+    "Send message to user chat action": "Ação de enviar mensagem para o chat do usuário"
 }
