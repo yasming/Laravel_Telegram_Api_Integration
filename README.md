@@ -15,7 +15,7 @@ Ngrok
 ### API Postman Collection
 
 ```
-https://www.getpostman.com/collections/2c44d41e1a6bf7290440
+https://www.getpostman.com/collections/ac48b52c1cb80a59d6e3
 ```
 
 ### API Swagger Documentation
