@@ -78,7 +78,7 @@ POST
 ```
 
 ```
-The follow endpoint is the one that will receive the messages from bot and process them
+The follow endpoint is the one that will receive the messages from bot and process them and send a message back to the user
 ```
 
 ```
