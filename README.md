@@ -45,6 +45,10 @@ TELEGRAM_WEBHOOK_API_URL=https://{url}/api/get-updates-from-bot/{token}
 after this run docker-compose up and after all things be built the project will be able to be access on localhost:80
 ```
 
+```
+to run project's test is need to exec nginx_container and run php artisan test
+```
+
 ### Getting started
 
 ```
