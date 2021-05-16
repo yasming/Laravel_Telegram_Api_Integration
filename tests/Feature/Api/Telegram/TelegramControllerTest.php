@@ -2,7 +2,8 @@
 
 namespace Tests\Feature\Api\Telegram;
 
-use App\Jobs\StoreMessagesFromBotInDatabaseJob;
+use App\Jobs\Telegram\StoreMessagesFromBotInDatabaseJob;
+use App\Jobs\Telegram\SendMessageToTelegramChatJob;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Tests\TestCase;
@@ -56,5 +57,11 @@ class TelegramControllerTest extends TestCase
 		Queue::assertPushed(StoreMessagesFromBotInDatabaseJob::class, function ($job) {
             return $job->action === __('Store messages from bot action');
 		});
+
+        Queue::assertPushedWithChain(StoreMessagesFromBotInDatabaseJob::class, [
+            SendMessageToTelegramChatJob::class,
+        ]);
+
+        Queue::assertPushed(StoreMessagesFromBotInDatabaseJob::class, 1);
     }
 }
