@@ -48,8 +48,8 @@ after this run docker-compose up and after all things be built the project will 
 ### Getting started
 
 ```
-## First is need to send a post for the follow endpoint to set bot's webhook url, this is the url
-that will receive all request from the bot, when someone send a message for your bot
+**First is need to send a post for the follow endpoint to set bot's webhook url, this is the url
+that will receive all request from the bot, when someone send a message for your bot**
 ```
 
 ```
@@ -61,7 +61,7 @@ POST
 ```
 
 ```
-## In case of your bot already have a webhook url you can delete this in the follow endpoint
+**In case of your bot already have a webhook url you can delete this in the follow endpoint**
 ```
 
 ```
@@ -73,7 +73,7 @@ POST
 ```
 
 ```
-## The follow endpoint is the one that will receive the messages from bot and process them
+**The follow endpoint is the one that will receive the messages from bot and process them**
 ```
 
 ```
