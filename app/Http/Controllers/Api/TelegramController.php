@@ -12,6 +12,7 @@ class TelegramController extends Controller
     public function getUpdatesFromBot(ValidateTokenRequest $request)
     {
         StoreMessagesFromBotInDatabase::dispatch($request->all());
+        return response()->json([__('message') => __('Received Message')]);
     }
 
     public function setWebhook()

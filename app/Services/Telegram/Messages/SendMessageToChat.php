@@ -20,7 +20,7 @@ class SendMessageToChat
             ],
             [
                 config('telegram.bot_and_token'),
-                __('Reply from bot')
+                __('Received Message')
             ] , $urlToSendMessageFromBot
         );    
     }

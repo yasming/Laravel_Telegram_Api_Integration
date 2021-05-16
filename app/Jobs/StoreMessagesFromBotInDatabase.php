@@ -28,6 +28,8 @@ class StoreMessagesFromBotInDatabase implements ShouldQueue
     private $messageText;
     private $activeSession;
 
+    public $action;
+    
     public function __construct($request)
     {
         $this->request       = $request;
@@ -37,6 +39,7 @@ class StoreMessagesFromBotInDatabase implements ShouldQueue
         $this->messageId     = $this->getAttributesValueFromBot(self::MESSAGE_ID_KEYS);
         $this->messageText   = $this->getAttributesValueFromBot(self::MESSAGE_TEXT_KEYS);
         $this->activeSession = $this->getActiveSession();
+        $this->action        = __('Store messages from bot action');
     }
 
     /**
@@ -55,7 +58,7 @@ class StoreMessagesFromBotInDatabase implements ShouldQueue
             $this->createNewSession();
         }
 
-        $response = (new SendMessageToChat)->setChatId($this->chatId)->sendMessage();
+        (new SendMessageToChat)->setChatId($this->chatId)->sendMessage();
     }
 
     private function updateSession() : void

@@ -1,3 +1,5 @@
 {
-    "Reply from bot": "Mensagem recebida"
+    "Received Message": "Mensagem recebida",
+    "Message": "Mensagem",
+    "Store messages from bot action": "Ação de gravar as mensagem do bot"
 }
