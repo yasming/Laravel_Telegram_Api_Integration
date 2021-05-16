@@ -15,7 +15,7 @@ Ngrok
 ### API Postman Collection
 
 ```
-https://www.getpostman.com/collections/2c44d41e1a6bf7290440
+https://www.getpostman.com/collections/ac48b52c1cb80a59d6e3
 ```
 
 ### API Swagger Documentation
@@ -45,6 +45,10 @@ TELEGRAM_WEBHOOK_API_URL=https://{url}/api/get-updates-from-bot/{token}
 after this run docker-compose up and after all things be built the project will be able to be access on localhost:80
 ```
 
+```
+to run project's test is need to exec nginx_container and run php artisan test
+```
+
 ### Getting started
 
 ```
@@ -60,7 +64,6 @@ POST
 /api/set-webhook
 ```
 
-
 ```
 In case of your bot already have a webhook url you can delete this in the follow endpoint
 ```
@@ -71,4 +74,16 @@ POST
 
 ```
 /api/delete-webhook
+```
+
+```
+The follow endpoint is the one that will receive the messages from bot and process them
+```
+
+```
+POST
+```
+
+```
+/api/get-updates-from-bot/{token}
 ```
