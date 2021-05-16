@@ -22,4 +22,9 @@ class DeleteWebhookTelegramApi
         return $response->json();
     }
 
+    public function getUrlToDeleteWebhook()
+    {
+        return $this->urlToDeleteWebhook;
+    }
+
 }

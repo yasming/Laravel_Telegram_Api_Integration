@@ -14,17 +14,15 @@ class SendMessageToTelegramChatJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private $chatId;
-
-    public $action;
+    public  $response;
     
     public function __construct($chatId)
     {
         $this->chatId        = $chatId;
-        $this->action        = __('Send message to user chat action');
     }
 
     public function handle()
     {
-        SendMessageToChat::setChatId($this->chatId)->sendMessage();
+        $this->response = SendMessageToChat::setChatId($this->chatId)->sendMessage();
     }
 }

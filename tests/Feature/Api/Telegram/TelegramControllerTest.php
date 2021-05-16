@@ -4,10 +4,13 @@ namespace Tests\Feature\Api\Telegram;
 
 use App\Jobs\Telegram\StoreMessagesFromBotInDatabaseJob;
 use App\Jobs\Telegram\SendMessageToTelegramChatJob;
+use App\Facades\Services\Telegram\Webhook\DeleteWebhookTelegramApi;
+use App\Facades\Services\Telegram\Webhook\SetWebhookTelegramApi;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Http;
 
 class TelegramControllerTest extends TestCase
 {
@@ -63,5 +66,51 @@ class TelegramControllerTest extends TestCase
         ]);
 
         Queue::assertPushed(StoreMessagesFromBotInDatabaseJob::class, 1);
+    }
+
+    public function test_it_should_delete_webhook()
+    {
+        $url = DeleteWebhookTelegramApi::getUrlToDeleteWebhook();
+        Http::fake([
+            $url => Http::response($this->mockDeleteWebhook(), HttpResponse::HTTP_OK, ['Headers']),
+        ]);
+
+        $this->post(route('api.remove-webhook', config('telegram.token')))
+             ->assertStatus(HttpResponse::HTTP_OK)
+             ->assertExactJson(
+                $this->mockDeleteWebhook()
+             );
+    }
+
+    public function test_it_should_set_webhook()
+    {
+        $url = SetWebhookTelegramApi::getUrlToSetWebhook();
+        Http::fake([
+            $url => Http::response($this->mockSetWebhook(), HttpResponse::HTTP_OK, ['Headers']),
+        ]);
+
+        $this->post(route('api.set-webhook', config('telegram.token')))
+             ->assertStatus(HttpResponse::HTTP_OK)
+             ->assertExactJson(
+                $this->mockSetWebhook()
+             );
+    }
+
+    private function mockDeleteWebhook()
+    {
+        return [
+            "ok"          => true,
+            "result"      => true,
+            "description" => "Webhook was deleted"
+        ];
+    }
+
+    private function mockSetWebhook()
+    {
+        return [
+            "ok"          => true,
+            "result"      => true,
+            "description" => "Webhook was set"
+        ];
     }
 }

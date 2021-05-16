@@ -25,5 +25,10 @@ class SetWebhookTelegramApi
         ]);
         return $response->json();
     }
+    
+    public function getUrlToSetWebhook()
+    {
+        return $this->urlToSetWebhook;
+    }
 
 }
