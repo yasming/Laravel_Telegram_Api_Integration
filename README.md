@@ -21,7 +21,7 @@ https://www.getpostman.com/collections/2c44d41e1a6bf7290440
 ### API Swagger Documentation
 
 ```
-https://app.swaggerhub.com/apis-docs/yasminguimaraes/PROPERTIES_API/1.0.0
+https://app.swaggerhub.com/apis-docs/yasminguimaraes/TELEGRAM_API_INTEGRATION/1.0.0#/Telegram%20api/post_api_delete_webhook
 ```
 
 ### How to run project's locally
@@ -31,7 +31,7 @@ First of all is need to download https://ngrok.com/download and run it like this
 ```
 
 ```
-Fill this three enviroment variables(on .env.example) with your bot's information:
+Fill this three enviroment variables(on .env.example and on .env.testing) with your bot's information:
 
 TELEGRAM_BOT_TOKEN=
 TELEGRAM_BOT_AND_TOKEN=
