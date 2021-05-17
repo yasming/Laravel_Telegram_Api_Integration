@@ -23,7 +23,7 @@ class Session extends Eloquent
     public function scopefilterByName(Builder $query,$name)
     {
        return $query->when($name, function ($query) use ($name) {
-              return $query->where('full_name','like','%'.$name).'%');
+              return $query->where('full_name','like','%'.$name.'%');
        });
     }
 }

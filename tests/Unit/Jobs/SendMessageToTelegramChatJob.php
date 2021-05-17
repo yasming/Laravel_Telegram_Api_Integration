@@ -4,11 +4,11 @@ namespace Tests\Unit\Jobs;
 
 use Illuminate\Support\Str;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\RefreshDatabase;
 
 class SendMessageToTelegramChatJob extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
     
     public function test_it_should_create_a_new_session_in_database()
     {

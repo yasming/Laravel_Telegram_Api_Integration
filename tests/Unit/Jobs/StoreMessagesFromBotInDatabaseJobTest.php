@@ -6,11 +6,11 @@ use App\Jobs\Telegram\StoreMessagesFromBotInDatabaseJob;
 use App\Models\Session;
 use Illuminate\Support\Str;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\RefreshDatabase;
 
 class StoreMessagesFromBotInDatabaseJobTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
     
     public function test_it_should_create_a_new_session_in_database()
     {

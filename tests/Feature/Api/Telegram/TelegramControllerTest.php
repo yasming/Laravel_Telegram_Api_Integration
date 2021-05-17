@@ -6,14 +6,18 @@ use App\Jobs\Telegram\StoreMessagesFromBotInDatabaseJob;
 use App\Jobs\Telegram\SendMessageToTelegramChatJob;
 use App\Facades\Services\Telegram\Webhook\DeleteWebhookTelegramApi;
 use App\Facades\Services\Telegram\Webhook\SetWebhookTelegramApi;
+use App\Http\Resources\Session\SessionCollection;
+use App\Models\Session;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Http;
-
+use Tests\RefreshDatabase;
 class TelegramControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @return array  */
     public function getValuesFromToken() : array
     {
@@ -94,6 +98,28 @@ class TelegramControllerTest extends TestCase
              ->assertExactJson(
                 $this->mockSetWebhook()
              );
+    }
+
+    public function test_it_should_return_all_active_sessions()
+    {
+        Session::factory()->create();
+        $allSessions = new SessionCollection(Session::filterByName(null)->get());
+
+        $response    = $this->get(route('api.get-active-sessions'))
+                            ->assertStatus(HttpResponse::HTTP_OK);
+                         
+        $this->assertEquals($allSessions->response()->getData(true)['data'],$response->getData(true));
+        $this->assertEquals(count($response->getData(true)), Session::all()->count());
+
+        Session::factory()->create(['full_name' => 'janedoe']);
+
+        $allSessions = new SessionCollection(Session::filterByName('janedoe')->get());
+        
+        $response    = $this->get(route('api.get-active-sessions',['name' => 'janedoe']))
+                            ->assertStatus(HttpResponse::HTTP_OK);
+                         
+        $this->assertEquals($allSessions->response()->getData(true)['data'],$response->getData(true));
+        $this->assertEquals(count($response->getData(true)), 1);
     }
 
     private function mockDeleteWebhook()
