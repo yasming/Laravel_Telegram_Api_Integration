@@ -31,7 +31,8 @@ First of all is need to download https://ngrok.com/download and run it like this
 ```
 
 ```
-Fill this three enviroment variables(on .env.example and on .env.testing) with your bot's information:
+Fill this three enviroment variables(on .env.example and on .env.testing) 
+with your bot's information:
 
 TELEGRAM_BOT_TOKEN=
 TELEGRAM_BOT_AND_TOKEN=
@@ -77,7 +78,8 @@ POST
 ```
 
 ```
-The follow endpoint is the one that will receive the messages from bot and process them
+The follow endpoint is the one that will receive the messages from bot and process them 
+and send a message back to the user
 ```
 
 ```
