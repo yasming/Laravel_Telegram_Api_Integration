@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\DB;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
 class Session extends Eloquent
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $connection = 'mongodb';
     protected $collection = 'sessions';
     protected $fillable = [
