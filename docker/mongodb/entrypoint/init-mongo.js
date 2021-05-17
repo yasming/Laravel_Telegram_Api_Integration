@@ -4,12 +4,14 @@ db.sessions.save( {
     chat_id: "123" , 
     first_name: "test",
     last_name: "test",
-    message: "test"
+    full_name: "test",
+    messages: "test"
 });
 
 db.sessions.remove( { 
     chat_id: "123" , 
     first_name: "test",
     last_name: "test",
-    message: "test"
+    full_name: "test",
+    messages: "test"
 });

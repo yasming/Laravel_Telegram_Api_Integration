@@ -60,10 +60,11 @@ class StoreMessagesFromBotInDatabaseJob implements ShouldQueue
 
     private function updateSession() : void
     {
-        $actualMessage = $this->activeSession->message;
-        array_push($actualMessage,$this->getMessageFromBot());
+        $actualMessages = $this->activeSession->messages;
+        
+        array_push($actualMessages,$this->getMessageFromBot());
 
-        $this->activeSession->update(['message' => $actualMessage]);
+        $this->activeSession->update(['messages' => $actualMessages]);
     }
 
     private function createNewSession() : void
@@ -72,8 +73,11 @@ class StoreMessagesFromBotInDatabaseJob implements ShouldQueue
             [
                 'first_name'         => $this->first_name,
                 'last_name'          => $this->last_name,
+                'full_name'          => $this->last_name 
+                                        ? $this->first_name. ' '.$this->last_name 
+                                        : $this->first_name,
                 'chat_id'            => $this->chatId,
-                'message'            => array(
+                'messages'            => array(
                    $this->getMessageFromBot()
                 )
             ]

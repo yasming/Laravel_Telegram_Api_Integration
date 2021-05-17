@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['as' => 'api.'], function () {
     Route::post('/get-updates-from-bot/{token}', [TelegramController::class, 'getUpdatesFromBot'])->name('updates-from-bot');
+    Route::get('/get-active-sessions', [TelegramController::class, 'getActiveSessions'])->name('get-active-sessions');
     Route::post('/set-webhook', [TelegramController::class, 'setWebhook'])->name('set-webhook');
     Route::post('/remove-webhook', [TelegramController::class, 'deleteWebhook'])->name('remove-webhook');
 });
