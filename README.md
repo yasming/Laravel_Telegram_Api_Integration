@@ -1,6 +1,6 @@
 # Telegram_Api_Integration
 
-This project is an api to receive messages from one telegram bot and send a message back to the user, after the queue of messages being processed
+This project is an api to receive messages from one telegram bot and send a message back for the user, after the queue of messages being processed
 
 ## Prerequisites
 
